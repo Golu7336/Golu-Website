@@ -1,2 +1,662 @@
-# Golu-Website
-Neon Themed Website
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Welcome - Yogeshwar's Blue Neon Themed Webpage</title>
+  <style>
+    :root {
+      --deep-bg: linear-gradient(120deg, #000022 0%, #001144 60%, #00aaff 100%);
+      --glow-main: #00c8ff;
+      --glow-secondary: #00ffff;
+      --accent-blue: #00aaff;
+      --accent-light: #66d9ff;
+      --button-grad: linear-gradient(95deg, #0088ff 0%, #00e5ff 60%, #66d9ff 100%);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--deep-bg);
+      font-family: 'Segoe UI', 'Roboto', 'Orbitron', Arial, sans-serif;
+      color: #a0e7ff;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .centered-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .glass-card {
+      position: relative;
+      background: rgba(0, 34, 68, 0.7);
+      border-radius: 36px;
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      box-shadow: 0 8px 52px #00aaff66, 0 2px 30px #00e5ff33;
+      border: 1.4px solid #00c8ffcc;
+      max-width: 470px;
+      min-width: 300px;
+      width: 96vw;
+      text-align: center;
+      padding: 3.2rem 2.2rem 2.1rem 2.2rem;
+      margin: 0 2vw;
+      transition: box-shadow 0.35s;
+      color: var(--accent-light);
+    }
+
+    .welcome-row {
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+      color: var(--glow-main);
+      font-size: 2.7rem;
+      letter-spacing: 2.5px;
+      margin-bottom: 1.1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 60px;
+      text-shadow: 0 3px 19px #66d9ff88, 0 0 24px #00c8ffbb;
+    }
+
+    .typed-text {
+      display: inline-block;
+      border-right: 2.5px solid var(--accent-light);
+      white-space: nowrap;
+      font-weight: 700;
+      animation: blink 0.7s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-right: 2.5px solid var(--accent-light);}
+      50% { border-right: 2.5px solid transparent;}
+    }
+
+    .desc {
+      color: #a0e7ff;
+      font-size: 1.09rem;
+      margin: 1rem 0 2.3rem 0;
+      opacity: 0.94;
+      line-height: 1.58;
+      text-shadow: 0 2px 14px #66d9ff55;
+    }
+
+    .explore-btn {
+      background: var(--button-grad);
+      color: #e0f7ff;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.16rem;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      padding: 1.03rem 2.4rem;
+      border: none;
+      border-radius: 32px;
+      margin: 0 auto;
+      box-shadow:
+        0 0 28px #00aaffbb,
+        0 7px 37px #00e5ffcc,
+        0 13px 76px #66d9ff77;
+      position: relative;
+      cursor: pointer;
+      z-index: 2;
+      overflow: hidden;
+      transition: transform 0.21s, box-shadow 0.21s;
+    }
+
+    .explore-btn:before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: -16px;
+      width: 120%;
+      height: 70%;
+      background: linear-gradient(90deg, #ccf8ff, #ccf8ff00 80%);
+      transform: rotate(-9deg);
+      opacity: 0.7;
+      pointer-events: none;
+      border-radius: 40px;
+      animation: btnshimmer 3s linear infinite;
+    }
+
+    @keyframes btnshimmer {
+      0% { left: -16px; opacity: 0.4;}
+      40% { left: 50%; opacity: 0.8;}
+      100% { left: 110%; opacity: 0;}
+    }
+
+    .explore-btn:hover,
+    .explore-btn:focus {
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow:
+        0 0 40px #0088ff,
+        0 12px 32px #00e5ffbb,
+        0 22px 87px #66d9ffaa;
+      outline: none;
+    }
+
+    .about-card {
+      display: none;
+      position: relative;
+      color: var(--accent-light);
+    }
+
+    .about-card.active {
+      display: block;
+      animation: fadeIn 0.85s cubic-bezier(0.67, 0.03, 0.28, 1.04);
+    }
+
+    .glass-card.hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(42px) scale(0.97);}
+      to { opacity: 1; transform: none;}
+    }
+
+    .about-card h1 {
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+      font-size: 2.11rem;
+      color: #66d9ff;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 4px 18px #00aaff55, 0 0 16px #00e5ff88;
+      letter-spacing: 2px;
+    }
+
+    .about-list {
+      list-style: disc inside;
+      text-align: left;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      padding: 0;
+      font-size: 1.13rem;
+      color: #a0dfff;
+      text-shadow: 0 2px 12px #00c8ff44;
+    }
+
+    .about-list li {
+      margin-bottom: 1.08rem;
+    }
+
+    .about-list b {
+      color: #0088ff;
+    }
+
+    .footer {
+      margin-top: 1.8rem;
+      font-size: 1.03rem;
+      color: #66d9ff;
+      text-shadow: 0 0 7px #00aaff66;
+      letter-spacing: 1.2px;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.7;
+      z-index: 0;
+      animation: float 11s linear infinite;
+    }
+
+    @keyframes float {
+      to {
+        transform: translateY(24vh) rotate(180deg);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .glass-card, .about-card {
+        padding: 1.7rem 0.14rem;
+      }
+      .welcome-row {
+        font-size: 2rem;
+      }
+      .glass-card, .about-card {
+        max-width: 99vw;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="bgParticles"></div>
+  <div class="centered-container">
+    <!-- Landing -->
+    <div id="landing" class="glass-card">
+      <div class="welcome-row">
+        <span class="typed-text" id="typed">Welcome</span>
+      </div>
+      <div class="desc">
+        Ready to enter a new dimension?<br />
+        Meet Yogeshwar—where bold ambition and friendly vibes create something truly unique.
+      </div>
+      <button class="explore-btn" onclick="showAbout()">Explore</button>
+    </div>
+    <!-- About Me -->
+    <div id="aboutCard" class="about-card glass-card">
+      <h1>About Yogeshwar</h1>
+      <ul class="about-list">
+        <li><b>Name:</b> Yogeshwar</li>
+        <li><b>Grade:</b> 10th student—balancing studies and personal passion, every single day.</li>
+        <li><b>Academic Journey:</b> Just your “average” student—but always striving to level up.</li>
+        <li><b>Gamer:</b> I thrive in digital worlds! Minecraft and other games fuel both my fun and creativity.</li>
+        <li><b>Arm Wrestling:</b> For me, it's all about the adrenaline, the sport, and facing new challenges head-on.</li>
+        <li><b>Creative:</b> I love to express big ideas, try new things, and bring a unique spark to everything I do.</li>
+        <li><b>Friendly Guy:</b> I’m approachable, positive, and always ready to connect with awesome people like you!</li>
+      </ul>
+      <div class="footer">
+        Join my journey—connect with me on <span style="color:#00ffff; font-weight:600;">Instagram</span>!
+      </div>
+      <button class="explore-btn" onclick="goBack()" style="margin-top: 1.4rem;">Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Typing (ChatGPT-like) effect
+    let msg = 'Welcome',
+      idx = 0,
+      typed = document.getElementById('typed');
+    function showWelcome() {
+      idx = 0;
+      typed.textContent = '';
+      function typeIt() {
+        if (idx <= msg.length) {
+          typed.textContent = msg.slice(0, idx);
+          idx++;
+          setTimeout(typeIt, 90);
+        }
+      }
+      typeIt();
+    }
+    showWelcome();
+
+    // Page transition logic
+    function showAbout() {
+      document.getElementById('landing').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('aboutCard').classList.add('active');
+      }, 500);
+    }
+    function goBack() {
+      document.getElementById('aboutCard').classList.remove('active');
+      setTimeout(() => {
+        document.getElementById('landing').classList.remove('hidden');
+        showWelcome();
+      }, 350);
+    }
+
+    // Animated Particles (background floating circles)
+    function spawnParticles() {
+      const bg = document.getElementById('bgParticles'),
+        n = 18;
+      bg.innerHTML = '';
+      for (let i = 0; i < n; ++i) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        let size = 28 + Math.random() * 42,
+          top = Math.random() * 80,
+          left = Math.random() * 95;
+        let color = ['#00aaffaa', '#00e5ffaa', '#66d9ff99', '#33cfff66', '#004b66aa'][i % 5];
+        p.style.width = p.style.height = size + 'px';
+        p.style.top = top + 'vh';
+        p.style.left = left + 'vw';
+        p.style.background = color;
+        p.style.animationDuration = 9 + Math.random() * 5 + 's';
+        p.style.filter = 'blur(' + (Math.floor(Math.random() * 7 + 2)) + 'px)';
+        bg.appendChild(p);
+      }
+    }
+    spawnParticles();
+
+    // Parallax BG
+    document.body.addEventListener('mousemove', (e) => {
+      if (window.innerWidth > 600) {
+        let x = (e.clientX / window.innerWidth - 0.5) * 70;
+        let y = (e.clientY / window.innerHeight - 0.5) * 70;
+        document.querySelector('.centered-container').style.transform = `translate(${x}px,${y}px) scale(1.03)`;
+      }
+    });
+
+    // Recreate particles on resize/orientation change
+    window.addEventListener('resize', spawnParticles);
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Welcome - Yogeshwar's Blue Neon Themed Webpage</title>
+  <style>
+    :root {
+      --deep-bg: linear-gradient(120deg, #000022 0%, #001144 60%, #00aaff 100%);
+      --glow-main: #00c8ff;
+      --glow-secondary: #00ffff;
+      --accent-blue: #00aaff;
+      --accent-light: #66d9ff;
+      --button-grad: linear-gradient(95deg, #0088ff 0%, #00e5ff 60%, #66d9ff 100%);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--deep-bg);
+      font-family: 'Segoe UI', 'Roboto', 'Orbitron', Arial, sans-serif;
+      color: #a0e7ff;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .centered-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .glass-card {
+      position: relative;
+      background: rgba(0, 34, 68, 0.7);
+      border-radius: 36px;
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      box-shadow: 0 8px 52px #00aaff66, 0 2px 30px #00e5ff33;
+      border: 1.4px solid #00c8ffcc;
+      max-width: 470px;
+      min-width: 300px;
+      width: 96vw;
+      text-align: center;
+      padding: 3.2rem 2.2rem 2.1rem 2.2rem;
+      margin: 0 2vw;
+      transition: box-shadow 0.35s;
+      color: var(--accent-light);
+    }
+
+    .welcome-row {
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+      color: var(--glow-main);
+      font-size: 2.7rem;
+      letter-spacing: 2.5px;
+      margin-bottom: 1.1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 60px;
+      text-shadow: 0 3px 19px #66d9ff88, 0 0 24px #00c8ffbb;
+    }
+
+    .typed-text {
+      display: inline-block;
+      border-right: 2.5px solid var(--accent-light);
+      white-space: nowrap;
+      font-weight: 700;
+      animation: blink 0.7s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-right: 2.5px solid var(--accent-light);}
+      50% { border-right: 2.5px solid transparent;}
+    }
+
+    .desc {
+      color: #a0e7ff;
+      font-size: 1.09rem;
+      margin: 1rem 0 2.3rem 0;
+      opacity: 0.94;
+      line-height: 1.58;
+      text-shadow: 0 2px 14px #66d9ff55;
+    }
+
+    .explore-btn {
+      background: var(--button-grad);
+      color: #e0f7ff;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.16rem;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      padding: 1.03rem 2.4rem;
+      border: none;
+      border-radius: 32px;
+      margin: 0 auto;
+      box-shadow:
+        0 0 28px #00aaffbb,
+        0 7px 37px #00e5ffcc,
+        0 13px 76px #66d9ff77;
+      position: relative;
+      cursor: pointer;
+      z-index: 2;
+      overflow: hidden;
+      transition: transform 0.21s, box-shadow 0.21s;
+    }
+
+    .explore-btn:before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: -16px;
+      width: 120%;
+      height: 70%;
+      background: linear-gradient(90deg, #ccf8ff, #ccf8ff00 80%);
+      transform: rotate(-9deg);
+      opacity: 0.7;
+      pointer-events: none;
+      border-radius: 40px;
+      animation: btnshimmer 3s linear infinite;
+    }
+
+    @keyframes btnshimmer {
+      0% { left: -16px; opacity: 0.4;}
+      40% { left: 50%; opacity: 0.8;}
+      100% { left: 110%; opacity: 0;}
+    }
+
+    .explore-btn:hover,
+    .explore-btn:focus {
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow:
+        0 0 40px #0088ff,
+        0 12px 32px #00e5ffbb,
+        0 22px 87px #66d9ffaa;
+      outline: none;
+    }
+
+    .about-card {
+      display: none;
+      position: relative;
+      color: var(--accent-light);
+    }
+
+    .about-card.active {
+      display: block;
+      animation: fadeIn 0.85s cubic-bezier(0.67, 0.03, 0.28, 1.04);
+    }
+
+    .glass-card.hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(42px) scale(0.97);}
+      to { opacity: 1; transform: none;}
+    }
+
+    .about-card h1 {
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+      font-size: 2.11rem;
+      color: #66d9ff;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 4px 18px #00aaff55, 0 0 16px #00e5ff88;
+      letter-spacing: 2px;
+    }
+
+    .about-list {
+      list-style: disc inside;
+      text-align: left;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      padding: 0;
+      font-size: 1.13rem;
+      color: #a0dfff;
+      text-shadow: 0 2px 12px #00c8ff44;
+    }
+
+    .about-list li {
+      margin-bottom: 1.08rem;
+    }
+
+    .about-list b {
+      color: #0088ff;
+    }
+
+    .footer {
+      margin-top: 1.8rem;
+      font-size: 1.03rem;
+      color: #66d9ff;
+      text-shadow: 0 0 7px #00aaff66;
+      letter-spacing: 1.2px;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.7;
+      z-index: 0;
+      animation: float 11s linear infinite;
+    }
+
+    @keyframes float {
+      to {
+        transform: translateY(24vh) rotate(180deg);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .glass-card, .about-card {
+        padding: 1.7rem 0.14rem;
+      }
+      .welcome-row {
+        font-size: 2rem;
+      }
+      .glass-card, .about-card {
+        max-width: 99vw;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="bgParticles"></div>
+  <div class="centered-container">
+    <!-- Landing -->
+    <div id="landing" class="glass-card">
+      <div class="welcome-row">
+        <span class="typed-text" id="typed">Welcome</span>
+      </div>
+      <div class="desc">
+        Ready to enter a new dimension?<br />
+        Meet Yogeshwar—where bold ambition and friendly vibes create something truly unique.
+      </div>
+      <button class="explore-btn" onclick="showAbout()">Explore</button>
+    </div>
+    <!-- About Me -->
+    <div id="aboutCard" class="about-card glass-card">
+      <h1>About Yogeshwar</h1>
+      <ul class="about-list">
+        <li><b>Name:</b> Yogeshwar</li>
+        <li><b>Grade:</b> 10th student—balancing studies and personal passion, every single day.</li>
+        <li><b>Academic Journey:</b> Just your “average” student—but always striving to level up.</li>
+        <li><b>Gamer:</b> I thrive in digital worlds! Minecraft and other games fuel both my fun and creativity.</li>
+        <li><b>Arm Wrestling:</b> For me, it's all about the adrenaline, the sport, and facing new challenges head-on.</li>
+        <li><b>Creative:</b> I love to express big ideas, try new things, and bring a unique spark to everything I do.</li>
+        <li><b>Friendly Guy:</b> I’m approachable, positive, and always ready to connect with awesome people like you!</li>
+      </ul>
+      <div class="footer">
+        Join my journey—connect with me on <span style="color:#00ffff; font-weight:600;">Instagram</span>!
+      </div>
+      <button class="explore-btn" onclick="goBack()" style="margin-top: 1.4rem;">Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Typing (ChatGPT-like) effect
+    let msg = 'Welcome',
+      idx = 0,
+      typed = document.getElementById('typed');
+    function showWelcome() {
+      idx = 0;
+      typed.textContent = '';
+      function typeIt() {
+        if (idx <= msg.length) {
+          typed.textContent = msg.slice(0, idx);
+          idx++;
+          setTimeout(typeIt, 90);
+        }
+      }
+      typeIt();
+    }
+    showWelcome();
+
+    // Page transition logic
+    function showAbout() {
+      document.getElementById('landing').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('aboutCard').classList.add('active');
+      }, 500);
+    }
+    function goBack() {
+      document.getElementById('aboutCard').classList.remove('active');
+      setTimeout(() => {
+        document.getElementById('landing').classList.remove('hidden');
+        showWelcome();
+      }, 350);
+    }
+
+    // Animated Particles (background floating circles)
+    function spawnParticles() {
+      const bg = document.getElementById('bgParticles'),
+        n = 18;
+      bg.innerHTML = '';
+      for (let i = 0; i < n; ++i) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        let size = 28 + Math.random() * 42,
+          top = Math.random() * 80,
+          left = Math.random() * 95;
+        let color = ['#00aaffaa', '#00e5ffaa', '#66d9ff99', '#33cfff66', '#004b66aa'][i % 5];
+        p.style.width = p.style.height = size + 'px';
+        p.style.top = top + 'vh';
+        p.style.left = left + 'vw';
+        p.style.background = color;
+        p.style.animationDuration = 9 + Math.random() * 5 + 's';
+        p.style.filter = 'blur(' + (Math.floor(Math.random() * 7 + 2)) + 'px)';
+        bg.appendChild(p);
+      }
+    }
+    spawnParticles();
+
+    // Parallax BG
+    document.body.addEventListener('mousemove', (e) => {
+      if (window.innerWidth > 600) {
+        let x = (e.clientX / window.innerWidth - 0.5) * 70;
+        let y = (e.clientY / window.innerHeight - 0.5) * 70;
+        document.querySelector('.centered-container').style.transform = `translate(${x}px,${y}px) scale(1.03)`;
+      }
+    });
+
+    // Recreate particles on resize/orientation change
+    window.addEventListener('resize', spawnParticles);
+  </script>
+</body>
+</html>
